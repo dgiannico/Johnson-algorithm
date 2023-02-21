@@ -60,46 +60,51 @@ public class Main {
 
         if (filesList != null) {
             for(File file: filesList) {
-                Scanner scanner = new Scanner(file);
+                if(!file.getName().equals("output.txt")) {
+                    Scanner scanner = new Scanner(file);
 
-                String s = scanner.nextLine();
-                while (s.charAt(0) == 'c')
-                    s = scanner.nextLine();
+                    String s = scanner.nextLine();
+                    while (s.charAt(0) == 'c')
+                        s = scanner.nextLine();
 
-                String[] parts = s.split("\s+");
-                int nVariables = Integer.parseInt(parts[2]);
-                int nClauses = Integer.parseInt(parts[3]);
+                    String[] parts = s.split("\s+");
+                    int nVariables = Integer.parseInt(parts[2]);
+                    int nClauses = Integer.parseInt(parts[3]);
 
-                // INIZIALITAZION
+                    // INIZIALITAZION
 
-                HashMap<Integer, Literal> L = new HashMap<>();
-                HashSet<Clause> S = new HashSet<>();
+                    HashMap<Integer, Literal> L = new HashMap<>();
+                    HashSet<Clause> S = new HashSet<>();
 
-                for (int i = 1; i <= nVariables; i++) {
-                    Literal literal = new Literal(i);
-                    Literal notLiteral = new Literal(-i);
-                    L.put(i, literal);
-                    L.put(-i, notLiteral);
-                }
-
-                for (int i = 1; i <= nClauses; i++) {
-                    Clause clause = new Clause(i);
-                    int v = scanner.nextInt();
-                    while (v != 0) {
-                        Literal literal = L.get(v);
-                        clause.getLiterals().add(literal);
-                        literal.getInvolvedClauses().add(clause);
-                        v = scanner.nextInt();
+                    for (int i = 1; i <= nVariables; i++) {
+                        Literal literal = new Literal(i);
+                        Literal notLiteral = new Literal(-i);
+                        L.put(i, literal);
+                        L.put(-i, notLiteral);
                     }
-                    S.add(clause);
-                    scanner.nextLine();
+
+                    for (int i = 1; i <= nClauses; i++) {
+                        Clause clause = new Clause(i);
+                        int v = scanner.nextInt();
+                        while (v != 0) {
+                            Literal literal = L.get(v);
+                            clause.getLiterals().add(literal);
+                            literal.getInvolvedClauses().add(clause);
+                            v = scanner.nextInt();
+                        }
+                        S.add(clause);
+                        scanner.nextLine();
+                    }
+
+                    HashSet<Clause> SUB = johnson(new HashSet<>(L.values()), S);
+
+                    System.out.println(file.getName() + " " + SUB.size());
+                    scanner.close();
                 }
-
-                HashSet<Clause> SUB = johnson(new HashSet<>(L.values()), S);
-
-                System.out.println(file.getName() + " " + SUB.size());
             }
         }
+        fileStream.flush();
+        fileStream.close();
     }
 
 }
