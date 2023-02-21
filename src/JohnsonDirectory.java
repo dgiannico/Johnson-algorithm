@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Scanner;
 
-public class Main {
+public class JohnsonDirectory {
 
     final static String directory = "instances/" + "max2sat-120v";
 
@@ -16,7 +16,7 @@ public class Main {
         HashSet<Clause> LEFT = new HashSet<>(S);
         HashSet<Literal> LIT = new HashSet<>(L);
 
-        while (check(LEFT, LIT)) {
+        while (check(LEFT, LIT)) { // 5. -> 2.
             // 3.
             Literal y = new Literal(1);
             int bestNClausesInvolved = 0;
@@ -26,7 +26,6 @@ public class Main {
                     y = literal;
                 }
             }
-
             HashSet<Clause> YT = y.getInvolvedClauses();
 
             Literal notY = new Literal(-y.id);
@@ -38,8 +37,6 @@ public class Main {
             LIT.remove(notY);
         }
 
-        // System.out.println(SUB.size());
-        // System.out.println(TRUE);
         return SUB;
     }
 
