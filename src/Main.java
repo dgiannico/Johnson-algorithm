@@ -7,6 +7,8 @@ import java.util.Scanner;
 
 public class Main {
 
+    final static String directory = "instances/" + "max2sat-120v";
+
     public static HashSet<Clause> johnson(HashSet<Literal> L, HashSet<Clause> S) {
         // 1.
         HashSet<Clause> SUB = new HashSet<>();
@@ -50,15 +52,15 @@ public class Main {
     }
 
     public static void main(String[] args) throws FileNotFoundException {
-        File directoryPath = new File("instances/max3sat-110v");
+        File directoryPath = new File(directory);
         File[] filesList = directoryPath.listFiles();
 
-        PrintStream fileStream = new PrintStream("outputs/max3sat-110v/output.txt"); // Output da inviare alla piattaforma
+        PrintStream fileStream = new PrintStream(directory + "/output.txt");
         System.setOut(fileStream);
 
         if (filesList != null) {
             for(File file: filesList) {
-                Scanner scanner = new Scanner(file); // Input fornito dalla piattaforma
+                Scanner scanner = new Scanner(file);
 
                 String s = scanner.nextLine();
                 while (s.charAt(0) == 'c')
