@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class JohnsonDirectory {
 
-    final static String directory = "instances/" + "max2sat-120v";
+    final static String directory = "instances/" + "max3sat-110v";
 
     public static HashSet<Clause> johnson(HashSet<Literal> L, HashSet<Clause> S) {
         // 1.
@@ -65,7 +65,7 @@ public class JohnsonDirectory {
                         s = scanner.nextLine();
 
                     String[] parts = s.split("\s+");
-                    int nVariables = Integer.parseInt(parts[2]);
+                    int nLiterals = Integer.parseInt(parts[2]);
                     int nClauses = Integer.parseInt(parts[3]);
 
                     // INIZIALITAZION
@@ -73,7 +73,7 @@ public class JohnsonDirectory {
                     HashMap<Integer, Literal> L = new HashMap<>();
                     HashSet<Clause> S = new HashSet<>();
 
-                    for (int i = 1; i <= nVariables; i++) {
+                    for (int i = 1; i <= nLiterals; i++) {
                         Literal literal = new Literal(i);
                         Literal notLiteral = new Literal(-i);
                         L.put(i, literal);
@@ -95,7 +95,7 @@ public class JohnsonDirectory {
 
                     HashSet<Clause> SUB = johnson(new HashSet<>(L.values()), S);
 
-                    System.out.println(file.getName() + " " + SUB.size());
+                    System.out.println(file.getName().replace(".cnf", "") + " " + SUB.size());
                     scanner.close();
                 }
             }

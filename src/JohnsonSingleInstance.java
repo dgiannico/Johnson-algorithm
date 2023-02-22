@@ -57,17 +57,17 @@ public class JohnsonSingleInstance {
             s = scanner.nextLine();
 
         String[] parts = s.split("\s+");
-        int nVariables = Integer.parseInt(parts[2]);
+        int nLiterals = Integer.parseInt(parts[2]);
         int nClauses = Integer.parseInt(parts[3]);
 
-        System.out.println("Variables: " + nVariables + "\nClauses: " + nClauses);
+        System.out.println("Variables: " + nLiterals + "\nClauses: " + nClauses);
 
         // INIZIALITAZION
 
         HashMap<Integer, Literal> L = new HashMap<>();
         HashSet<Clause> S = new HashSet<>();
 
-        for (int i = 1; i <= nVariables; i++) {
+        for (int i = 1; i <= nLiterals; i++) {
             Literal literal = new Literal(i);
             Literal notLiteral = new Literal(-i);
             L.put(i, literal);
